@@ -14,6 +14,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
+    @qiniu_upload_token = generate_qiniu_upload_token
     @post = Post.new
   end
 
@@ -24,7 +25,12 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @post = Post.new(post_params)
+    upload_ret = JSON.parse(Base64.urlsafe_decode64(params[:upload_ret]))
+    @post = Post.new(
+      title: upload_ret['title'],
+      filename: upload_ret['fname'],
+      qiniu_hash: upload_ret['hash']
+    )
 
     respond_to do |format|
       if @post.save
@@ -70,5 +76,16 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:title, :filename, :qiniu_hash)
+    end
+
+    def generate_qiniu_upload_token
+      put_policy = Qiniu::Auth::PutPolicy.new('konata')
+      put_policy.return_body = {
+        fname: '$(fname)',
+        hash: '$(etag)',
+        title: '$(x:title)'
+      }.to_json
+      put_policy.return_url = create_posts_url
+      Qiniu::Auth.generate_uptoken(put_policy)
     end
 end

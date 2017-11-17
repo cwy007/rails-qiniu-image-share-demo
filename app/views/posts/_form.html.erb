@@ -1,32 +1,17 @@
-<%= form_with(model: post, local: true) do |form| %>
-  <% if post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
-
-      <ul>
-      <% post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_tag 'http://upload.qiniu.com', multipart: true do %>
+  <%= hidden_field_tag :token, @qiniu_upload_token %>
 
   <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title, id: :post_title %>
+    <%= label_tag :title %>
+    <%= text_field_tag: 'x:title' %>
   </div>
 
   <div class="field">
-    <%= form.label :filename %>
-    <%= form.text_field :filename, id: :post_filename %>
-  </div>
-
-  <div class="field">
-    <%= form.label :qiniu_hash %>
-    <%= form.text_field :qiniu_hash, id: :post_qiniu_hash %>
+    <%= label_tag :image %>
+    <%= file_field_tag :file %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= submit_tag 'Create' %>
   </div>
 <% end %>
