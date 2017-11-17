@@ -1,24 +1,4 @@
-# README
+#### 如何使用 Rails 和七牛云存储，在 15 分钟内打造一个图片分享社交应用原型
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+link:
+http://www.jb51.net/article/80489.htm
