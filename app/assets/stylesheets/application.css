@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+   padding: 20px;
+ }
+
+ a.image:hover {
+   background-color: transparent;
+ }
+
+ div.posts {
+   display: flex;
+   flex-flow: row wrap;
+   justify-content: space-between;
+ }

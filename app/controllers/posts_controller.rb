@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /posts
   # GET /posts.json
@@ -29,7 +30,8 @@ class PostsController < ApplicationController
     @post = Post.new(
       title: upload_ret['title'],
       filename: upload_ret['fname'],
-      qiniu_hash: upload_ret['hash']
+      qiniu_hash: upload_ret['hash'],
+      creator: current_user 
     )
 
     respond_to do |format|
