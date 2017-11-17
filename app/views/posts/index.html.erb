@@ -13,9 +13,16 @@
       <%= link_to image_tag(qiniu_image_url(post, :square), size: '300'), post, class: 'image' %>
       <br>
       <%= post.title %>
-      <% if user_signed_in? && post.creator == current_user %>
       <br>
-        <%= link_to 'Destroy', post, method: :delete, data: { confirm: "Are you sure?" } %>
+      <%= content_tag(:span, "#{post.likes.count} likes", id: "post_#{post.id}_likes") %>
+
+      <% if user_signed_in? %>
+        <br>
+        <%= link_to 'Like', post_likes_path(post), method: :post, remote: true %>
+
+        <% if post.creator == current_user %>
+          <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
       <% end %>
     </p>
   <% end %>
